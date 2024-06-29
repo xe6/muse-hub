@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { SrvModule } from './srv.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const srv = await NestFactory.create(AppModule);
+  const srv = await NestFactory.create(SrvModule);
   srv.enableCors({
     origin: ['http://localhost:3000'],
   });
