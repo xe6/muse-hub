@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Artist {
+  id         Int    @id @default(autoincrement())
+  name       String @unique
+  genre      String
+  country    String
+  spotifyUrl String @unique
+  // One artist can have only one manager
+  managerId  Int?
+  userId     Int?   @unique
+  manager    User?  @relation("ManagedArtists", fields: [managerId], references: [id])
+  user       User?  @relation("ArtistProfile", fields: [userId], references: [id])
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  password       String
+  role           Role     @default(ARTIST)
+  managedArtists Artist[] @relation("ManagedArtists")
+  artistProfile  Artist?  @relation("ArtistProfile")
+}
+
+enum Role {
+  ARTIST
+  MANAGER
+  ADMIN
+}
