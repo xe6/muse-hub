@@ -14,7 +14,7 @@ type Props = { artists: ArtistModel[]; onPick: (artist: ArtistModel) => void };
 export function PickArtistList({ artists, onPick }: Props) {
   return (
     <div className="container mx-auto px-4">
-      <h2 className="text-2xl font-bold text-center mb-6">Pick you profile</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">Pick your profile</h2>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {artists.map((artist) => (
           <li key={artist.id}>

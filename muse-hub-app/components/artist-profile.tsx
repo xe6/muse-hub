@@ -5,7 +5,7 @@ import { ArtistModel } from '@/models';
 type Props = { artist: ArtistModel };
 export default function ArtistProfile({ artist }: Props) {
   return (
-    <Card className="overflow-hidden">
+    <Card className="w-80 mx-auto mb-6">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
