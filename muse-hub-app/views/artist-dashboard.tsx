@@ -29,10 +29,12 @@ export function ArtistDashboard() {
     fetchData();
   }, []);
 
-  const handleArtistPick = (artist: ArtistModel) => {
-    axiosInstance
-      .post('/artists/my-profile', { artistId: artist.id })
-      .then(() => setMyProfile(artist));
+  const handleArtistPick = async (artist: ArtistModel) => {
+    const profileResponse = await axiosInstance.post('/artists/my-profile', {
+      artistId: artist.id,
+    });
+
+    setMyProfile(profileResponse.data);
   };
 
   return (

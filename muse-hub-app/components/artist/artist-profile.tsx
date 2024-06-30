@@ -50,6 +50,10 @@ export default function ArtistProfile({ artist }: Props) {
               <span className="text-muted-foreground">Manager ID</span>
               <span>{artist.managerId || 'N/A'}</span>
             </li>
+            <li className="flex items-center justify-between">
+              <span className="text-muted-foreground">User ID</span>
+              <span>{artist.userId || 'N/A'}</span>
+            </li>
           </ul>
         </div>
       </CardContent>
