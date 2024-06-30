@@ -1,6 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { AdminDashboard } from './admin-dashboard';
+import { UserRole } from '@/models';
+import { ArtistDashboard } from './artist-dashboard';
+import { ManagerDashboard } from './manager-dashboard';
 
 export function DashboardComponent() {
   const [user] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
@@ -12,15 +15,13 @@ export function DashboardComponent() {
   );
 }
 
-const renderDashboard = (role: string) => {
+const renderDashboard = (role: UserRole) => {
   switch (role) {
-    case 'ARTIST':
-      //   return <ArtistDashboard />;
-      return <p>Artist</p>;
-    case 'MANAGER':
-      //   return <ManagerDashboard />;
-      return <p>Manager</p>;
-    case 'ADMIN':
+    case UserRole.ARTIST:
+      return <ArtistDashboard />;
+    case UserRole.MANAGER:
+      return <ManagerDashboard />;
+    case UserRole.ADMIN:
       return <AdminDashboard />;
     default:
       return <p>Invalid role</p>;

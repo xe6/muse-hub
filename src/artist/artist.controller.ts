@@ -36,19 +36,19 @@ export class ArtistController {
   }
 
   @Roles([UserRole.ARTIST])
-  @Get('unassgined')
+  @Get('/unassigned')
   async getUnassignedArtists(): Promise<Artist[]> {
     return this.artistService.getUnassignedArtists();
   }
 
   @Roles([UserRole.ARTIST])
-  @Get('my-profile')
+  @Get('/my-profile')
   async getOwnArtist(@GetJWTPayload() jwtPayload: JWTPayload): Promise<Artist> {
     return this.artistService.getOwnArtist(jwtPayload.id);
   }
 
   @Roles([UserRole.ARTIST])
-  @Post('my-profile')
+  @Post('/my-profile')
   async setOwnArtist(
     @Body() { artistId }: SetProfileDto,
     @GetJWTPayload() { id }: JWTPayload,
@@ -57,13 +57,13 @@ export class ArtistController {
   }
 
   @Roles([UserRole.MANAGER])
-  @Get('unmanaged')
+  @Get('/unmanaged')
   async getUnmanagedArtists(): Promise<Artist[]> {
     return this.artistService.getUnmanagedArtists();
   }
 
   @Roles([UserRole.MANAGER])
-  @Get('managed')
+  @Get('/managed')
   async getManagedArtists(
     @GetJWTPayload() { id }: JWTPayload,
   ): Promise<Artist[]> {
@@ -71,7 +71,7 @@ export class ArtistController {
   }
 
   @Roles([UserRole.MANAGER])
-  @Post('managed')
+  @Post('/managed')
   async setManagedArtists(
     @Body() { artistIds }: SetManagedDto,
     @GetJWTPayload() { id }: JWTPayload,
@@ -80,7 +80,7 @@ export class ArtistController {
   }
 
   // >> This method has complex authorization logic that cannot be handled by @Roles decorator
-  @Get(':id')
+  @Get('I:id')
   async getArtistById(
     @Param('id', ParseIntPipe) id: number,
     @GetJWTPayload() { id: userId, role }: JWTPayload,

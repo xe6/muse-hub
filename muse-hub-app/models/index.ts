@@ -7,3 +7,9 @@ export type ArtistModel = {
   userId?: number;
   managerId?: number;
 };
+
+export enum UserRole {
+  ARTIST = 'ARTIST',
+  MANAGER = 'MANAGER',
+  ADMIN = 'ADMIN',
+}
