@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { ModeToggle } from '../components/ui/mode-toggle';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Logout } from '../components/logout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Logout />
           <ModeToggle />
           {children}
           <ToastContainer />

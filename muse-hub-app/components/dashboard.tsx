@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { AdminDashboard } from './admin-dashboard';
 
 export function DashboardComponent() {
   const [user] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
@@ -20,8 +21,7 @@ const renderDashboard = (role: string) => {
       //   return <ManagerDashboard />;
       return <p>Manager</p>;
     case 'ADMIN':
-      //   return <AdminDashboard />;
-      return <p>Admin</p>;
+      return <AdminDashboard />;
     default:
       return <p>Invalid role</p>;
   }

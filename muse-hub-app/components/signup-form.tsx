@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from './ui/select';
 import axiosInstance from '@/utils/axios-instance';
+import { toast } from 'react-toastify';
 
 export function SignupForm() {
   const [email, setEmail] = useState('');
@@ -31,16 +32,14 @@ export function SignupForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth/signup', {
+      await axiosInstance.post('/auth/signup', {
         email,
         password,
         role,
       });
-      // Handle successful response
-      console.log('Account created:', response.data);
+      toast.success('Account created successfully');
     } catch (error) {
-      // Handle error response
-      console.error('Error creating account:', error);
+      toast.error('Failed to create account');
     }
   };
 

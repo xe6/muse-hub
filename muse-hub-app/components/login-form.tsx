@@ -30,8 +30,6 @@ export function LoginForm() {
         email,
         password,
       });
-      // Handle successful login
-      console.log('Logged in successfully:', response.data);
       localStorage.setItem('token', response.data.accessToken);
       const decodedToken = jwtDecode(response.data.accessToken);
       // >> TODO: Use Context instead of localStorage
