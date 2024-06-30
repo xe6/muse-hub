@@ -4,10 +4,11 @@ import {
   DialogContent,
   DialogTrigger,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Label } from './ui/label';
+  DialogClose,
+} from '@/components/shadcn-ui/dialog';
+import { Input } from '../shadcn-ui/input';
+import { Button } from '../shadcn-ui/button';
+import { Label } from '../shadcn-ui/label';
 import axiosInstance from '@/utils/axios-instance';
 import { toast } from 'react-toastify';
 import { ArtistModel } from '@/models';
@@ -34,7 +35,9 @@ export function CreateArtistDialog({
       onAddArtist(response.data);
       toast.success(`${name} artist entry created successfully`);
     } catch (error) {
-      toast.error('Failed to create artist');
+      toast.error(
+        'Failed to create artist. Looks like this one already exists.',
+      );
     }
   };
 
@@ -90,9 +93,11 @@ export function CreateArtistDialog({
               onChange={(e) => setSpotifyUrl(e.target.value)}
             />
           </div>
-          <Button type="submit" className="w-full">
-            Create Artist
-          </Button>
+          <DialogClose asChild>
+            <Button type="submit" className="w-full">
+              Create Artist
+            </Button>
+          </DialogClose>
         </form>
       </DialogContent>
     </Dialog>

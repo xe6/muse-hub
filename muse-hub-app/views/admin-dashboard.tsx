@@ -9,12 +9,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Search } from 'lucide-react';
+} from '@/components/shadcn-ui/table';
 import { ArtistModel } from '@/models';
 
-import { CreateArtistDialog } from './create-artist-dialog';
-import { Input } from './ui/input';
+import { CreateArtistDialog } from '@/components/admin/create-artist-dialog';
+import { Input } from '@/components/shadcn-ui/input';
+import ArtistProfile from '@/components/artist/artist-profile';
 
 export function AdminDashboard() {
   const [artists, setArtists] = useState<ArtistModel[]>([]);
@@ -37,6 +37,7 @@ export function AdminDashboard() {
     const updatedArtists = [...artists, newArtist];
     setArtists(updatedArtists);
     setFilteredArtists(updatedArtists);
+    setSelectedArtist(newArtist);
   };
 
   const handleRowClick = (artist: ArtistModel) => {
@@ -46,12 +47,8 @@ export function AdminDashboard() {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = artists.filter(
-      (artist) =>
-        artist.name.toLowerCase().includes(query) ||
-        artist.genre.toLowerCase().includes(query) ||
-        artist.country.toLowerCase().includes(query) ||
-        artist.spotifyUrl.toLowerCase().includes(query),
+    const filtered = artists.filter((artist) =>
+      artist.name.toLowerCase().includes(query),
     );
     setFilteredArtists(filtered);
   };
@@ -59,25 +56,24 @@ export function AdminDashboard() {
   return loading ? (
     'Loading...'
   ) : (
-    <>
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="container mx-auto p-6 rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold text-center mb-6">
-            Admin Dashboard
-          </h1>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-6">Admin Dashboard</h1>
+      <div className="flex flex-row w-full max-w-6xl">
+        <div className="flex-1 p-8 max-w-xlg">
+          {' '}
           <CreateArtistDialog onAddArtist={handleAddArtist} />
-          <div className="mt-4 relative ml-auto flex-1 md:grow-0">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <div className="mt-4 relative flex items-center">
+            {/* Could be debounced BE search here */}
             <Input
               type="search"
               placeholder="Search by name..."
-              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+              className="pl-10 w-full rounded-xlg"
               value={searchQuery}
               onChange={handleSearch}
             />
           </div>
-          <div className="w-[800px] mt-4 overflow-auto">
-            <Table className="min-w-full border border-zinc-700">
+          <div className="mt-4 overflow-auto">
+            <Table className="min-w-full">
               <TableCaption>A list of all artists</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -93,7 +89,7 @@ export function AdminDashboard() {
                   filteredArtists.map((artist) => (
                     <TableRow
                       key={artist.id}
-                      className="border-t border-gray-700"
+                      className="border-t border-gray-700 cursor-pointer"
                       onClick={() => handleRowClick(artist)}
                     >
                       <TableCell className="font-medium">{artist.id}</TableCell>
@@ -114,7 +110,7 @@ export function AdminDashboard() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="text-center">
+                    <TableCell colSpan={5} className="text-center">
                       No artists found
                     </TableCell>
                   </TableRow>
@@ -122,52 +118,17 @@ export function AdminDashboard() {
               </TableBody>
             </Table>
           </div>
-          <div
-            className={`mt-6 p-6 border border-gray-700 rounded-lg w-[800px] h-[300px] transition-height duration-300 ease-in-out`}
-          >
+        </div>
+        <div className="flex-1 p-4">
+          <div className="p-6 border border-gray-700 rounded-lg h-full">
             {selectedArtist ? (
-              <>
-                <h2 className="text-2xl font-bold mb-4">Artist Details</h2>
-                <p>
-                  <strong>ID:</strong> {selectedArtist.id}
-                </p>
-                <p>
-                  <strong>Name:</strong> {selectedArtist.name}
-                </p>
-                <p>
-                  <strong>Genre:</strong> {selectedArtist.genre}
-                </p>
-                <p>
-                  <strong>Country:</strong> {selectedArtist.country}
-                </p>
-                <p>
-                  <strong>Spotify URL:</strong>{' '}
-                  <a
-                    href={selectedArtist.spotifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 underline"
-                  >
-                    {selectedArtist.spotifyUrl}
-                  </a>
-                </p>
-                {selectedArtist.userId && (
-                  <p>
-                    <strong>Artist User ID:</strong> {selectedArtist.userId}
-                  </p>
-                )}
-                {selectedArtist.managerId && (
-                  <p>
-                    <strong>Manager User ID:</strong> {selectedArtist.managerId}
-                  </p>
-                )}
-              </>
+              <ArtistProfile artist={selectedArtist} />
             ) : (
               <p className="text-center">Click on an artist to see details</p>
             )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn-ui/button';
 import {
   Card,
   CardContent,
@@ -9,13 +9,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/shadcn-ui/card';
 import { jwtDecode } from 'jwt-decode';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/components/shadcn-ui/input';
+import { Label } from '@/components/shadcn-ui/label';
 import axiosInstance from '@/utils/axios-instance';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -36,9 +37,7 @@ export function LoginForm() {
       localStorage.setItem('user', JSON.stringify(decodedToken));
       toast.success('Logged in successfully');
       router.push('/dashboard');
-      // You can redirect the user to a different page or save the token in localStorage
     } catch (error: any) {
-      // Handle error
       toast.error('Invalid credentials');
     }
   };
@@ -73,6 +72,12 @@ export function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <div className="mt-4 text-center text-sm">
+              No account yet?{' '}
+              <Link href="/signup" className="underline">
+                Sign up
+              </Link>
+            </div>
           </div>
         </CardContent>
         <CardFooter>

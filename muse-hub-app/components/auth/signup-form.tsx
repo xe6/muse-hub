@@ -2,16 +2,16 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn-ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/shadcn-ui/card';
+import { Input } from '@/components/shadcn-ui/input';
+import { Label } from '@/components/shadcn-ui/label';
 import {
   Select,
   SelectContent,
@@ -20,17 +20,25 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
+} from '../shadcn-ui/select';
 import axiosInstance from '@/utils/axios-instance';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { UserRole } from '@/models';
 
 export function SignupForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
 
+  const router = useRouter();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!role) {
+      toast.error('Please select a role');
+      return;
+    }
     try {
       await axiosInstance.post('/auth/signup', {
         email,
@@ -38,8 +46,12 @@ export function SignupForm() {
         role,
       });
       toast.success('Account created successfully');
-    } catch (error) {
-      toast.error('Failed to create account');
+      router.push('/login');
+    } catch (error: any) {
+      console.dir(error);
+      toast.error(
+        `Failed to create account: ${error?.response?.data?.message}`,
+      );
     }
   };
 
@@ -76,15 +88,19 @@ export function SignupForm() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="role">Role</Label>
-            <Select value={role} onValueChange={setRole}>
+            <Select
+              value={role}
+              onValueChange={setRole}
+              defaultValue={UserRole.ARTIST}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Roles</SelectLabel>
-                  <SelectItem value="ARTIST">Artist</SelectItem>
-                  <SelectItem value="MANAGER">Manager</SelectItem>
+                  <SelectItem value={UserRole.ARTIST}>Artist</SelectItem>
+                  <SelectItem value={UserRole.MANAGER}>Manager</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

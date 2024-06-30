@@ -1,7 +1,7 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { Button } from './ui/button';
+import { Button } from '../shadcn-ui/button';
 import { useRouter } from 'next/navigation';
 
 export function Logout() {

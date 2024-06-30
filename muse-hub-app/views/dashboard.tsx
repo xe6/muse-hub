@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { AdminDashboard } from './admin-dashboard';
 import { UserRole } from '@/models';
+import { AdminDashboard } from './admin-dashboard';
 import { ArtistDashboard } from './artist-dashboard';
 import { ManagerDashboard } from './manager-dashboard';
 

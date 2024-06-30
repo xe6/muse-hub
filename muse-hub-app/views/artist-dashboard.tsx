@@ -2,8 +2,8 @@ import { ArtistModel } from '@/models';
 import axiosInstance from '@/utils/axios-instance';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import ArtistProfile from './artist-profile';
-import { PickArtistList } from './pick-artist-list';
+import ArtistProfile from '@/components/artist/artist-profile';
+import { PickArtistList } from '@/components/artist/pick-artist-list';
 
 export function ArtistDashboard() {
   const [myProfile, setMyProfile] = useState<ArtistModel | null>(null);

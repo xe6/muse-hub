@@ -1,21 +1,9 @@
 import { ArtistModel } from '@/models';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  CheckIcon,
-  FlagIcon,
-  MusicIcon,
-  SquareMousePointerIcon,
-  BanIcon,
-} from 'lucide-react';
+import { Button } from '@/components/shadcn-ui/button';
+import { Card, CardFooter } from '@/components/shadcn-ui/card';
+import { CheckIcon, SquareMousePointerIcon, BanIcon } from 'lucide-react';
 import { useState } from 'react';
+import ArtistProfile from '../artist/artist-profile';
 
 type Props = {
   artists: ArtistModel[];
@@ -34,12 +22,12 @@ export function SelectArtistsList({ artists, onSubmit }: Props) {
     setSelectedArtists(selectedArtists.filter((a) => a.id !== artist.id));
   };
 
-  return (
+  return artists.length > 0 ? (
     <div className="container mx-auto px-4">
+      <h2 className="text-2xl font-bold text-center flex-grow">
+        Pick artists to manage
+      </h2>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-center flex-grow">
-          Pick artists to manage
-        </h2>
         <Button
           disabled={selectedArtists.length === 0}
           onClick={() => onSubmit(selectedArtists)}
@@ -51,26 +39,7 @@ export function SelectArtistsList({ artists, onSubmit }: Props) {
         {artists.map((artist) => (
           <li key={artist.id} className="flex flex-col">
             <Card className="w-full max-w-xs mx-auto flex flex-col flex-grow">
-              <CardHeader>
-                <CardTitle>{artist.name}</CardTitle>
-                <CardDescription>{artist.genre}</CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-4 flex-grow">
-                <div className="flex items-center">
-                  <FlagIcon className="mr-2 h-4 w-4" /> <p>{artist.country}</p>
-                </div>
-                <div className="flex items-center">
-                  <MusicIcon className="mr-2 h-4 w-4" />
-                  <a
-                    href={artist.spotifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 underline"
-                  >
-                    Spotify
-                  </a>
-                </div>
-              </CardContent>
+              <ArtistProfile artist={artist}></ArtistProfile>
               <CardFooter>
                 {selectedArtists.includes(artist) ? (
                   <>
@@ -98,5 +67,7 @@ export function SelectArtistsList({ artists, onSubmit }: Props) {
         ))}
       </ul>
     </div>
+  ) : (
+    <p>No artists available now. Check back later</p>
   );
 }

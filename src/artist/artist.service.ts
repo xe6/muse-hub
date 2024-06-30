@@ -103,8 +103,9 @@ export class ArtistService {
               mode: 'insensitive', // Makes the search case-insensitive
             },
           },
+          orderBy: { id: 'asc' },
         })
-      : this.prisma.artist.findMany();
+      : this.prisma.artist.findMany({ orderBy: { id: 'asc' } });
   }
 
   async getUnassignedArtists() {

@@ -2,27 +2,12 @@ import { ArtistModel } from '@/models';
 import axiosInstance from '@/utils/axios-instance';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import ArtistProfile from './artist-profile';
-import { SelectArtistsList } from './select-artists-list';
+import ArtistProfile from '@/components/artist/artist-profile';
+import { SelectArtistsList } from '@/components/manager/select-artists-list';
 
 export function ManagerDashboard() {
   const [managedArtists, setManagedArtists] = useState<ArtistModel[]>([]);
   const [unmanagedArtists, setUnmanagedArtists] = useState<ArtistModel[]>([]);
-
-  const handleOnSaveSelection = async (artists: ArtistModel[]) => {
-    try {
-      const managedArtistsResponse = await axiosInstance.post(
-        '/artists/managed',
-        {
-          artistIds: artists.map((a) => a.id),
-        },
-      );
-      setManagedArtists(managedArtistsResponse.data);
-      setUnmanagedArtists([]);
-    } catch (error) {
-      toast.error('Failed to save selection');
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,8 +32,23 @@ export function ManagerDashboard() {
     fetchData();
   }, []);
 
+  const handleOnSaveSelection = async (artists: ArtistModel[]) => {
+    try {
+      const managedArtistsResponse = await axiosInstance.post(
+        '/artists/managed',
+        {
+          artistIds: artists.map((a) => a.id),
+        },
+      );
+      setManagedArtists(managedArtistsResponse.data);
+      setUnmanagedArtists([]);
+    } catch (error) {
+      toast.error('Failed to save selection');
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div>
       <h1 className="text-4xl font-bold text-center mb-6">Manager Dashboard</h1>
 
       {managedArtists.length === 0 && (
