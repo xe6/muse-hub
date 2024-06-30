@@ -33,12 +33,20 @@ export function CreateArtistDialog({
         spotifyUrl,
       });
       onAddArtist(response.data);
+      clearForm();
       toast.success(`${name} artist entry created successfully`);
     } catch (error) {
       toast.error(
         'Failed to create artist. Looks like this one already exists.',
       );
     }
+  };
+
+  const clearForm = () => {
+    setName('');
+    setGenre('');
+    setCountry('');
+    setSpotifyUrl('');
   };
 
   return (
