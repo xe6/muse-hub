@@ -28,12 +28,12 @@ model Artist {
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique
-  hashedPassword String
-  role           Role     @default(ARTIST)
-  managedArtists Artist[] @relation("ManagedArtists")
-  artistProfile  Artist?  @relation("ArtistProfile")
+  id                  Int      @id @default(autoincrement())
+  email               String   @unique
+  hashedPassword      String
+  role                Role     @default(ARTIST)
+  managedArtists      Artist[] @relation("ManagedArtists")
+  artistProfile       Artist?  @relation("ArtistProfile")
 }
 
 enum Role {
