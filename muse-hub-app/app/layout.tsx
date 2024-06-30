@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ModeToggle } from '../components/ui/mode-toggle';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +29,7 @@ export default function RootLayout({
         >
           <ModeToggle />
           {children}
+          <ToastContainer />
         </ThemeProvider>
       </body>
     </html>
