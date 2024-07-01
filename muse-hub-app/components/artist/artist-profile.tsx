@@ -40,7 +40,7 @@ export default function ArtistProfile({ artist }: Props) {
             href={artist.spotifyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-400 underline"
+            className="text-blue-400 underline break-all max-w-full"
           >
             {artist.spotifyUrl}
           </a>

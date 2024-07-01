@@ -101,7 +101,7 @@ export function AdminDashboard() {
                           href={artist.spotifyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-400 underline"
+                          className="text-blue-400 underline break-all max-w-xs"
                         >
                           {artist.spotifyUrl}
                         </a>
